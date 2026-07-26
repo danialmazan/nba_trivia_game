@@ -30,11 +30,13 @@ test('starts a Normal challenge, deducts misses, reveals clues and accepts the a
   await startGame(page)
   await expect(page.getByText('1 / 10')).toBeVisible()
   await expect(page.getByTestId('available-score')).toHaveText('100')
+  await expect(page.locator('.scorebar-points')).toHaveText(/for100PTS/i)
+  await expect(page.getByText('Previous guesses')).toHaveCount(0)
 
   await page.getByLabel(/guess now/i).fill('Bill Russell')
   await page.getByRole('button', { name: 'Submit' }).click()
   await expect(page.getByTestId('available-score')).toHaveText('90')
-  await expect(page.getByText('Bill Russell')).toBeVisible()
+  await expect(page.locator('.previous-guesses-inline')).toHaveText('Bill Russell.')
 
   await page.getByRole('button', { name: /next clue/i }).click()
   await expect(page.getByTestId('available-score')).toHaveText('70')
@@ -43,6 +45,15 @@ test('starts a Normal challenge, deducts misses, reveals clues and accepts the a
   await page.getByRole('button', { name: 'Submit' }).click()
   await expect(page.getByTestId('answer-reveal')).toContainText('Kareem Abdul-Jabbar')
   await expect(page.getByTestId('answer-reveal')).toContainText('70')
+})
+
+test('does not summon the keyboard by focusing the guess input on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await startGame(page)
+  const input = page.getByLabel(/guess now/i)
+  await expect(input).not.toBeFocused()
+  await page.getByRole('button', { name: /next clue/i }).click()
+  await expect(input).not.toBeFocused()
 })
 
 test('giving up reveals the answer and scores zero', async ({ page }) => {

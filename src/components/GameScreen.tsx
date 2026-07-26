@@ -26,7 +26,8 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
   const roundNumber = game.results.length + (isReview ? 0 : 1)
 
   useEffect(() => {
-    if (!isReview) inputRef.current?.focus()
+    const hasDesktopKeyboard = window.matchMedia('(min-width: 781px) and (pointer: fine)').matches
+    if (!isReview && hasDesktopKeyboard) inputRef.current?.focus()
   }, [game.round.clueLevel, game.round.incorrectGuesses.length, game.round.playerId, isReview])
 
   function handleSubmit(event: React.FormEvent) {
@@ -67,8 +68,11 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
         </div>
         <div className="game-scorebar__available">
           <span>{isReview ? 'Round score' : 'Available now'}</span>
-          <strong data-testid="available-score">{isReview ? game.round.pointsEarned : availableScore}</strong>
-          <em>PTS</em>
+          <div className="scorebar-points">
+            {!isReview && <em>for</em>}
+            <strong data-testid="available-score">{isReview ? game.round.pointsEarned : availableScore}</strong>
+            <em>PTS</em>
+          </div>
         </div>
         <div>
           <span>{game.settings.mode === 'practice' ? 'Players solved' : 'Game score'}</span>
@@ -104,10 +108,7 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
           ) : (
             <>
               <div className="section-heading">
-                <div>
-                  <span className="eyebrow">Who is this player?</span>
-                  <h1 id="clue-heading">Current clues</h1>
-                </div>
+                <span className="eyebrow current-clues-title" id="clue-heading">Current clues</span>
                 <span className="difficulty-pip">Clue {game.round.clueLevel} / 5</span>
               </div>
 
@@ -156,7 +157,7 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
               </div>
               <form onSubmit={handleSubmit}>
                 <label htmlFor="player-guess">
-                  Guess now <span>· {GAME_CONFIG.incorrectGuessPenalty} pts per miss</span>
+                  Guess now <span>· −{GAME_CONFIG.incorrectGuessPenalty} pts per miss</span>
                 </label>
                 <div className="guess-row">
                   <input
@@ -188,20 +189,15 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
                   Give up
                 </button>
               </div>
-              <details className="previous-guesses" open={game.round.incorrectGuesses.length > 0}>
-                <summary>
-                  Previous guesses <span>{game.round.incorrectGuesses.length}</span>
-                </summary>
-                {game.round.incorrectGuesses.length ? (
-                  <ol>
-                    {game.round.incorrectGuesses.map((previousGuess) => (
-                      <li key={previousGuess}>{previousGuess}</li>
-                    ))}
-                  </ol>
-                ) : (
-                  <p>No misses yet.</p>
-                )}
-              </details>
+              {game.round.incorrectGuesses.length > 0 && (
+                <p className="previous-guesses-inline" aria-label="Incorrect guesses">
+                  {game.round.incorrectGuesses.map((previousGuess, index) => (
+                    <span key={previousGuess}>
+                      <s>{previousGuess}</s>{index < game.round.incorrectGuesses.length - 1 ? ', ' : '.'}
+                    </span>
+                  ))}
+                </p>
+              )}
             </>
           )}
         </aside>

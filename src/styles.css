@@ -666,27 +666,31 @@ button:disabled {
 
 .game-scorebar .game-scorebar__available {
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto 1fr;
   background: var(--orange);
   color: #fff;
 }
 
 .game-scorebar__available span {
-  grid-column: 1 / -1;
   color: rgba(255, 255, 255, 0.72);
 }
 
-.game-scorebar__available strong {
+.scorebar-points {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.scorebar-points strong {
   font-size: 2.6rem;
   line-height: 0.8;
 }
 
-.game-scorebar__available em {
-  align-self: end;
+.scorebar-points em {
   font-size: 0.7rem;
   font-style: normal;
   font-weight: 900;
+  text-transform: uppercase;
 }
 
 .pool-reset {
@@ -737,6 +741,11 @@ button:disabled {
 
 .section-heading h1 {
   font-size: clamp(1.7rem, 3vw, 3rem);
+}
+
+.current-clues-title {
+  color: var(--orange-hot);
+  font-size: 0.68rem;
 }
 
 .difficulty-pip {
@@ -1020,45 +1029,16 @@ button:disabled {
   color: #ff967b;
 }
 
-.previous-guesses {
-  margin-top: 2rem;
-  border-top: 1px solid var(--line);
+.previous-guesses-inline {
+  margin: 0.8rem 0 0;
+  color: #e78773;
+  font-size: 0.76rem;
+  line-height: 1.4;
 }
 
-.previous-guesses summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  list-style: none;
-  text-transform: uppercase;
-}
-
-.previous-guesses summary span {
-  display: grid;
-  width: 1.6rem;
-  height: 1.6rem;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-}
-
-.previous-guesses ol {
-  margin: 0;
-  padding: 0 0 0 1.3rem;
-  color: var(--paper-dim);
-  font-size: 0.8rem;
-  line-height: 1.9;
-}
-
-.previous-guesses p {
-  color: #666d67;
-  font-size: 0.78rem;
+.previous-guesses-inline s {
+  text-decoration-color: #ff5d45;
+  text-decoration-thickness: 2px;
 }
 
 .answer-zone--review {
@@ -1478,10 +1458,6 @@ button:disabled {
   .status-message {
     min-height: 0;
     margin: 0.55rem 0 0.7rem;
-  }
-
-  .previous-guesses {
-    margin-top: 0.8rem;
   }
 
   .section-heading {
