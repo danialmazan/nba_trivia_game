@@ -439,6 +439,133 @@ button:disabled {
   text-underline-offset: 0.25rem;
 }
 
+/* Pre-game guide */
+.guide-shell {
+  min-height: 100vh;
+  padding-bottom: 4rem;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255, 93, 42, 0.13), transparent 26rem),
+    var(--ink);
+}
+
+.guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4.5rem;
+  padding: 0 3vw;
+  border-bottom: 1px solid var(--line);
+}
+
+.guide-card {
+  display: grid;
+  width: min(calc(100% - 2rem), 68rem);
+  margin: clamp(2rem, 7vh, 5rem) auto 0;
+  grid-template-columns: minmax(17rem, 0.8fr) minmax(21rem, 1.2fr);
+  border: 1px solid var(--line);
+  background: var(--ink-soft);
+  box-shadow: 0 2rem 7rem rgba(0, 0, 0, 0.35);
+}
+
+.guide-card__intro {
+  padding: clamp(2rem, 5vw, 4.5rem);
+  border-right: 1px solid var(--line);
+  background:
+    linear-gradient(150deg, rgba(255, 93, 42, 0.15), transparent 60%),
+    #0b0e0e;
+}
+
+.guide-card__intro h1 {
+  margin: 0.7rem 0 1.3rem;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.guide-card__intro > p {
+  color: #bdc2bd;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.guide-matchup {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.guide-matchup i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.guide-rules {
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+
+.guide-rules article {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.guide-rule__number {
+  color: var(--orange);
+  font-family: var(--score);
+}
+
+.guide-rules strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.guide-rules p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.guide-actions {
+  display: grid;
+  margin-top: 0.8rem;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line);
+}
+
+.guide-actions span {
+  padding: 0.7rem 0.35rem;
+  border-right: 1px solid var(--line);
+  color: var(--paper);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.guide-actions span:last-child {
+  border-right: 0;
+  color: #ff967b;
+}
+
+.guide-confirm {
+  margin: 0 clamp(1rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem);
+  grid-column: 2;
+}
+
 /* Gameplay */
 .game-shell {
   min-height: 100vh;
@@ -504,7 +631,7 @@ button:disabled {
 .game-scorebar {
   display: grid;
   grid-template-columns: repeat(4, minmax(8rem, 1fr));
-  min-height: 6rem;
+  min-height: 5rem;
   border-bottom: 1px solid var(--line);
   background: #080a0a;
 }
@@ -577,6 +704,25 @@ button:disabled {
   min-height: calc(100vh - 10.5rem);
 }
 
+.game-layout--review {
+  grid-template-columns: 1fr;
+}
+
+.game-layout--review .answer-zone {
+  order: -1;
+  padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+.game-layout--review .answer-reveal {
+  width: min(100%, 52rem);
+  margin: 0 auto;
+}
+
+.game-layout--review .clue-zone {
+  padding-block: 1rem 3rem;
+  border-right: 0;
+}
+
 .clue-zone {
   padding: clamp(2rem, 4vw, 4.5rem);
   border-right: 1px solid var(--line);
@@ -604,14 +750,14 @@ button:disabled {
 
 .clue-stack {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.5rem;
 }
 
 .clue-card {
   position: relative;
   display: grid;
   grid-template-columns: 4rem 1fr;
-  min-height: 7.5rem;
+  min-height: 5.25rem;
   overflow: hidden;
   border: 1px solid rgba(10, 13, 13, 0.16);
   background: var(--paper);
@@ -639,12 +785,12 @@ button:disabled {
 .clue-card__body {
   display: flex;
   justify-content: center;
-  padding: 1.2rem clamp(1rem, 2vw, 2rem);
+  padding: 0.75rem clamp(0.9rem, 2vw, 1.6rem);
   flex-direction: column;
 }
 
 .clue-card .eyebrow {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.3rem;
   color: #77786f;
 }
 
@@ -669,7 +815,7 @@ button:disabled {
 
 .team-clue__copy {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.28rem;
 }
 
 .team-clue .career-decades {
@@ -691,8 +837,8 @@ button:disabled {
 .team-logo {
   position: relative;
   display: grid;
-  width: 4rem;
-  height: 4rem;
+  width: 3.25rem;
+  height: 3.25rem;
   place-items: center;
   border: 1px solid rgba(10, 13, 13, 0.15);
   border-radius: 50%;
@@ -754,16 +900,32 @@ button:disabled {
   text-transform: uppercase;
 }
 
+.answer-zone label span {
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.guess-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
 .answer-zone input {
   width: 100%;
   min-height: 4rem;
   padding: 0 1rem;
   border: 1px solid rgba(241, 237, 223, 0.32);
-  border-bottom: 0;
+  border-right: 0;
   border-radius: 0;
   background: var(--ink);
   color: var(--paper);
   font-size: 1rem;
+}
+
+.guess-row .primary-button {
+  min-width: 6.5rem;
 }
 
 .answer-zone input::placeholder {
@@ -799,10 +961,59 @@ button:disabled {
 }
 
 .give-up-button {
-  padding: 0.8rem;
-  background: transparent;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid rgba(223, 134, 113, 0.42);
+  background: rgba(223, 134, 113, 0.04);
   color: #df8671;
   font-size: 0.73rem;
+}
+
+.review-clues {
+  width: min(100%, 68rem);
+  margin: 0 auto;
+}
+
+.review-clues > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  color: var(--paper);
+  cursor: pointer;
+  list-style: none;
+}
+
+.review-clues > summary::-webkit-details-marker {
+  display: none;
+}
+
+.review-clues > summary span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.review-clues > summary strong {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.review-clues > summary small {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.review-clues > summary b {
+  color: var(--orange);
+  font-size: 1.2rem;
+}
+
+.review-clues[open] > summary {
+  margin-bottom: 0.6rem;
+}
+
+.review-clues[open] > summary b {
+  transform: rotate(45deg);
 }
 
 .give-up-button:hover {
@@ -1188,8 +1399,28 @@ button:disabled {
 }
 
 @media (max-width: 780px) {
+  .guide-card {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-card__intro {
+    padding: 2.2rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .guide-card__intro h1 {
+    font-size: clamp(2.5rem, 11vw, 4rem);
+  }
+
+  .guide-confirm {
+    margin: 0 1rem 1rem;
+    grid-column: 1;
+  }
+
   .game-header {
     grid-template-columns: 1fr auto;
+    min-height: 3.5rem;
     padding-inline: 1rem;
   }
 
@@ -1199,6 +1430,7 @@ button:disabled {
 
   .game-scorebar {
     grid-template-columns: repeat(3, 1fr);
+    min-height: 4.25rem;
   }
 
   .scorebar-optional {
@@ -1207,7 +1439,7 @@ button:disabled {
 
   .game-scorebar > div {
     min-width: 0;
-    padding: 0.8rem;
+    padding: 0.55rem 0.7rem;
   }
 
   .game-scorebar strong {
@@ -1220,16 +1452,45 @@ button:disabled {
 
   .game-layout {
     grid-template-columns: 1fr;
+    min-height: 0;
+    grid-auto-rows: max-content;
+  }
+
+  .game-layout:not(.game-layout--review) .answer-zone {
+    order: -1;
   }
 
   .clue-zone {
-    padding: 1.5rem 1rem 2rem;
+    padding: 1rem 1rem 2rem;
     border-right: 0;
   }
 
   .answer-zone {
-    padding: 2rem 1rem 5rem;
+    padding: 1rem;
     border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .answer-zone__header {
+    margin-bottom: 0.8rem;
+  }
+
+  .status-message {
+    min-height: 0;
+    margin: 0.55rem 0 0.7rem;
+  }
+
+  .previous-guesses {
+    margin-top: 0.8rem;
+  }
+
+  .section-heading {
+    align-items: center;
+    margin-bottom: 0.7rem;
+  }
+
+  .section-heading h1 {
+    font-size: 1.25rem;
   }
 
   .clue-card:nth-child(even) {
@@ -1237,7 +1498,30 @@ button:disabled {
   }
 
   .clue-card {
-    grid-template-columns: 2.8rem 1fr;
+    min-height: 4.2rem;
+    grid-template-columns: 2.35rem 1fr;
+  }
+
+  .clue-card__body {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .clue-card .eyebrow {
+    font-size: 0.58rem;
+  }
+
+  .clue-copy,
+  .team-clue p {
+    font-size: 0.86rem;
+    line-height: 1.32;
+  }
+
+  .team-clue .career-decades {
+    font-size: 0.8rem;
+  }
+
+  .team-clue small {
+    font-size: 0.65rem;
   }
 
   .team-clue {
@@ -1245,8 +1529,8 @@ button:disabled {
   }
 
   .team-logo {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 2.7rem;
+    height: 2.7rem;
   }
 
   .result-stats {
@@ -1264,7 +1548,7 @@ button:disabled {
 
 @media (max-width: 560px) {
   .hero {
-    padding: 3rem 1.2rem;
+    padding: 2.1rem 1.2rem;
   }
 
   .hero::after {
@@ -1272,14 +1556,23 @@ button:disabled {
   }
 
   .hero__kicker {
-    margin-bottom: 3rem;
+    margin-bottom: 1.35rem;
   }
 
   .hero h1 {
-    font-size: clamp(3.5rem, 19vw, 5.7rem);
+    max-width: 12ch;
+    font-size: clamp(2.35rem, 12vw, 3.7rem);
+    line-height: 0.86;
+  }
+
+  .hero h1 span {
+    display: inline;
+    margin-left: 0.12em;
+    transform: none;
   }
 
   .hero__lead {
+    margin: 1.35rem 0;
     font-size: 0.95rem;
   }
 
@@ -1341,11 +1634,89 @@ button:disabled {
   }
 
   .team-clue {
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
   }
 
   .round-actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .round-actions .give-up-button {
+    min-width: 5.8rem;
+  }
+
+  .guide-shell {
+    padding-bottom: 1rem;
+  }
+
+  .guide-header {
+    min-height: 3.5rem;
+    padding-inline: 1rem;
+  }
+
+  .guide-card {
+    width: calc(100% - 1.25rem);
+    margin-top: 0.65rem;
+  }
+
+  .guide-card__intro {
+    padding: 1.25rem;
+  }
+
+  .guide-card__intro h1 {
+    margin-block: 0.45rem 0.7rem;
+    font-size: 2rem;
+  }
+
+  .guide-card__intro > p {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .guide-matchup {
+    margin-top: 0.85rem;
+  }
+
+  .guide-rules {
+    padding: 0.3rem 1rem 0.6rem;
+  }
+
+  .guide-rules article {
+    padding: 0.75rem 0;
+    grid-template-columns: 1.8rem 1fr;
+    gap: 0.5rem;
+  }
+
+  .guide-rules strong {
+    font-size: 0.78rem;
+  }
+
+  .guide-rules p {
+    font-size: 0.7rem;
+  }
+
+  .guide-actions {
+    margin-top: 0.5rem;
+  }
+
+  .guide-actions span {
+    padding-block: 0.5rem;
+    font-size: 0.6rem;
+  }
+
+  .guide-confirm {
+    min-height: 3.5rem;
+  }
+
+  .answer-reveal h2 {
+    margin-bottom: 0.9rem;
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .earned-stamp {
+    margin-bottom: 0.8rem;
   }
 
   .recap-row {

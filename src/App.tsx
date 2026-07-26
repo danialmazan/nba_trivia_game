@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { GameScreen } from './components/GameScreen'
+import { GameGuide } from './components/GameGuide'
 import { ResultsScreen } from './components/ResultsScreen'
 import { SetupScreen } from './components/SetupScreen'
 import { players } from './data/players'
@@ -20,6 +21,7 @@ export function App() {
   const [savedData, setSavedData] = useState<SavedData>(() => loadSavedData())
   const [settings, setSettings] = useState<GameSettings>(() => loadSavedData().lastSettings)
   const [game, setGame] = useState<GameState | null>(null)
+  const [showGuide, setShowGuide] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
 
   useEffect(() => {
@@ -73,13 +75,19 @@ export function App() {
     ) {
       return
     }
+    setShowGuide(true)
+  }
+
+  function confirmGameStart() {
     const newGame = buildNewGame(settings)
     setGame(newGame)
+    setShowGuide(false)
     setSavedData((current) => ({ ...current, lastSettings: settings, unfinishedGame: newGame }))
   }
 
   function resumeGame() {
     if (savedData.unfinishedGame) {
+      setShowGuide(false)
       setSettings(savedData.unfinishedGame.settings)
       setGame(savedData.unfinishedGame)
     }
@@ -192,6 +200,7 @@ export function App() {
       return
     }
     setGame(null)
+    setShowGuide(false)
   }
 
   function playAgain() {
@@ -214,7 +223,7 @@ export function App() {
 
   return (
     <div className="app">
-      {!game && (
+      {!game && !showGuide && (
         <SetupScreen
           settings={settings}
           savedData={savedData}
@@ -222,6 +231,13 @@ export function App() {
           onSettingsChange={updateSettings}
           onStart={startGame}
           onResume={resumeGame}
+        />
+      )}
+      {!game && showGuide && (
+        <GameGuide
+          settings={settings}
+          onBack={() => setShowGuide(false)}
+          onConfirm={confirmGameStart}
         />
       )}
       {game && game.phase !== 'results' && currentPlayer && (

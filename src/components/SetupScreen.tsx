@@ -34,8 +34,8 @@ export function SetupScreen({
           <span>Season 01</span>
         </div>
         <h1 id="game-title">
-          Name that
-          <span>hooper.</span>
+          Guess the
+          <span>player.</span>
         </h1>
         <p className="hero__lead">
           Five clues. Hardest first. No gimmicks—just the careers you remember and the details you don’t.

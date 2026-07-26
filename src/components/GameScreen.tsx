@@ -43,7 +43,7 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
     <main className="game-shell">
       <header className="game-header">
         <button className="wordmark" type="button" onClick={onExit} aria-label="Leave game">
-          FULL<span>COURT</span>
+          GUESS <span>THE PLAYER</span>
         </button>
         <div className="game-header__meta">
           <span>{MODE_LABELS[game.settings.mode]}</span>
@@ -84,26 +84,45 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
 
       {game.poolResetMessage && <div className="pool-reset" role="status">{game.poolResetMessage}</div>}
 
-      <div className="game-layout">
+      <div className={`game-layout ${isReview ? 'game-layout--review' : ''}`}>
         <section className="clue-zone" aria-labelledby="clue-heading">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">Scouting report</span>
-              <h1 id="clue-heading">Who is this player?</h1>
-            </div>
-            <span className="difficulty-pip">Clue {game.round.clueLevel} / 5</span>
-          </div>
+          {isReview ? (
+            <details className="review-clues">
+              <summary id="clue-heading">
+                <span>
+                  <strong>Review all five clues</strong>
+                  <small>Optional · answer shown above</small>
+                </span>
+                <b aria-hidden="true">＋</b>
+              </summary>
+              <div className="clue-stack">
+                {visibleClues.map((clue, index) => (
+                  <ClueCard clue={clue} index={index + 1} key={`${game.round.playerId}-${index}`} />
+                ))}
+              </div>
+            </details>
+          ) : (
+            <>
+              <div className="section-heading">
+                <div>
+                  <span className="eyebrow">Who is this player?</span>
+                  <h1 id="clue-heading">Current clues</h1>
+                </div>
+                <span className="difficulty-pip">Clue {game.round.clueLevel} / 5</span>
+              </div>
 
-          <div className="clue-stack">
-            {visibleClues.map((clue, index) => (
-              <ClueCard
-                clue={clue}
-                index={index + 1}
-                key={`${game.round.playerId}-${index}`}
-                newlyRevealed={!isReview && index + 1 === game.round.clueLevel}
-              />
-            ))}
-          </div>
+              <div className="clue-stack">
+                {visibleClues.map((clue, index) => (
+                  <ClueCard
+                    clue={clue}
+                    index={index + 1}
+                    key={`${game.round.playerId}-${index}`}
+                    newlyRevealed={index + 1 === game.round.clueLevel}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </section>
 
         <aside className={`answer-zone ${isReview ? 'answer-zone--review' : ''}`}>
@@ -133,22 +152,24 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
             <>
               <div className="answer-zone__header">
                 <span className="eyebrow">Your call</span>
-                <span>{GAME_CONFIG.incorrectGuessPenalty} pts per miss</span>
+                <span>Guess · clue · give up</span>
               </div>
               <form onSubmit={handleSubmit}>
-                <label htmlFor="player-guess">Enter one player</label>
-                <input
-                  id="player-guess"
-                  ref={inputRef}
-                  value={guess}
-                  onChange={(event) => setGuess(event.target.value)}
-                  placeholder="e.g. LeBron James"
-                  autoComplete="off"
-                  spellCheck="false"
-                />
-                <button className="primary-button" type="submit">
-                  Submit guess
-                </button>
+                <label htmlFor="player-guess">
+                  Guess now <span>· {GAME_CONFIG.incorrectGuessPenalty} pts per miss</span>
+                </label>
+                <div className="guess-row">
+                  <input
+                    id="player-guess"
+                    ref={inputRef}
+                    value={guess}
+                    onChange={(event) => setGuess(event.target.value)}
+                    placeholder="Player name"
+                    autoComplete="off"
+                    spellCheck="false"
+                  />
+                  <button className="primary-button" type="submit">Submit</button>
+                </div>
               </form>
               <p className="status-message" role="status" aria-live="polite">
                 {game.round.statusMessage || 'Full names, unique surnames and common short names work.'}
@@ -160,7 +181,7 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
                   onClick={onReveal}
                   disabled={game.round.clueLevel >= GAME_CONFIG.cluesPerRound}
                 >
-                  Reveal another clue
+                  Next clue
                   <span>{game.round.clueLevel >= 5 ? 'All shown' : `${GAME_CONFIG.clueBaseScores[game.round.clueLevel]} pts base`}</span>
                 </button>
                 <button className="give-up-button" type="button" onClick={onGiveUp}>
