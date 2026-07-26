@@ -16,6 +16,10 @@ interface GameScreenProps {
   onExit: () => void
 }
 
+function shouldAutoFocusGuess(): boolean {
+  return window.matchMedia('(min-width: 781px) and (pointer: fine)').matches
+}
+
 export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext, onExit }: GameScreenProps) {
   const [guess, setGuess] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -26,15 +30,17 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
   const roundNumber = game.results.length + (isReview ? 0 : 1)
 
   useEffect(() => {
-    const hasDesktopKeyboard = window.matchMedia('(min-width: 781px) and (pointer: fine)').matches
-    if (!isReview && hasDesktopKeyboard) inputRef.current?.focus()
+    if (!isReview && shouldAutoFocusGuess()) inputRef.current?.focus()
   }, [game.round.clueLevel, game.round.incorrectGuesses.length, game.round.playerId, isReview])
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     onSubmit(guess)
     setGuess('')
-    requestAnimationFrame(() => inputRef.current?.focus())
+    requestAnimationFrame(() => {
+      if (shouldAutoFocusGuess()) inputRef.current?.focus()
+      else inputRef.current?.blur()
+    })
   }
 
   const solved = game.results.filter((result) => result.outcome === 'correct').length
