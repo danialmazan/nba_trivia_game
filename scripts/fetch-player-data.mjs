@@ -180,7 +180,7 @@ async function fetchCached(cacheKey, url) {
   if (existsSync(cachePath)) return readFile(cachePath)
 
   const response = await fetch(url, {
-    headers: { 'user-agent': 'Guess the Player NBA trivia data validation/0.3' },
+    headers: { 'user-agent': 'Lebron Games NBA trivia data validation/0.3' },
   })
   if (!response.ok) throw new Error(`${response.status} ${response.statusText} fetching ${url}`)
   const bytes = new Uint8Array(await response.arrayBuffer())

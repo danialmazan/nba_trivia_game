@@ -50,7 +50,7 @@ export function GameScreen({ game, player, onSubmit, onReveal, onGiveUp, onNext,
     <main className="game-shell">
       <header className="game-header">
         <button className="wordmark" type="button" onClick={onExit} aria-label="Leave game">
-          GUESS <span>THE PLAYER</span>
+          LEBRON <span>GAMES</span>
         </button>
         <div className="game-header__meta">
           <span>{MODE_LABELS[game.settings.mode]}</span>

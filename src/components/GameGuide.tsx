@@ -19,7 +19,7 @@ export function GameGuide({ settings, onBack, onConfirm }: GameGuideProps) {
     <main className="guide-shell">
       <header className="guide-header">
         <button type="button" className="wordmark" onClick={onBack}>
-          GUESS <span>THE PLAYER</span>
+          LEBRON <span>GAMES</span>
         </button>
         <button type="button" className="exit-button" onClick={onBack}>Back</button>
       </header>

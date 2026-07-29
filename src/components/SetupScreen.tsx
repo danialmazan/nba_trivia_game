@@ -34,8 +34,8 @@ export function SetupScreen({
           <span>Season 01</span>
         </div>
         <h1 id="game-title">
-          Guess the
-          <span>player.</span>
+          Lebron
+          <span>Games.</span>
         </h1>
         <p className="hero__lead">
           Five clues. Hardest first. No gimmicks—just the careers you remember and the details you don’t.

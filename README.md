@@ -1,6 +1,6 @@
-# Guess the Player — NBA Trivia
+# Lebron Games — NBA Trivia
 
-Guess the Player is a browser-based NBA trivia MVP built around basketball knowledge rather than chance. Identify a player from five progressively easier career clues, protect the points still on the board, and review the full answer before moving on.
+Lebron Games is a browser-based NBA trivia MVP built around basketball knowledge rather than chance. Identify a player from five progressively easier career clues, protect the points still on the board, and review the full answer before moving on.
 
 The app is fully local at runtime: no account, backend, database, paid API, or live statistics request is required.
 
